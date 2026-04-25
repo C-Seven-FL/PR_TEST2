@@ -1,13 +1,13 @@
-import { createServiceSchema } from "../api/service/validation/create_service_valid.js";
-import { listServiceSchema } from "../api/service/validation/list_service_valid.js";
-import { getServiceSchema } from "../api/service/validation/get_service_valid.js";
-import { updateServiceSchema } from "../api/service/validation/update_service_valid.js";
+import { createCategorySchema } from "../api/category/validation/create_category_valid.js";
+import { listCategorySchema } from "../api/category/validation/list_category_valid.js";
+import { getCategorySchema } from "../api/category/validation/get_category_valid.js";
+import { updateCategorySchema } from "../api/category/validation/update_category_valid.js";
 
 import { StatusCodes } from "http-status-codes";
 
-export function validateCreateService(req, res, next) {
+export function validateCreateCategory(req, res, next) {
   try {
-    const parsed = createServiceSchema.parse(req.body);
+    const parsed = createCategorySchema.parse(req.body);
 
     req.body = parsed; 
     next();
@@ -18,9 +18,9 @@ export function validateCreateService(req, res, next) {
   }
 }
 
-export function validateListService(req, res, next) {
+export function validateListCategory(req, res, next) {
   try {
-    const parsed = listServiceSchema.parse(req.query);
+    const parsed = listCategorySchema.parse(req.query);
 
     req.validatedQuery = parsed; 
     next();
@@ -32,9 +32,9 @@ export function validateListService(req, res, next) {
   }
 }
 
-export function validateGetService(req, res, next) {
+export function validateGetCategory(req, res, next) {
   try {
-    const parsed = getServiceSchema.parse(req.params);
+    const parsed = getCategorySchema.parse(req.params);
 
     req.validatedParams = parsed; 
     next();
@@ -46,11 +46,11 @@ export function validateGetService(req, res, next) {
   }
 }
 
-export function validateUpdateService(req, res, next) {
+export function validateUpdateCategory(req, res, next) {
   try {
 
-    const parsedParam = getServiceSchema.parse(req.params);
-    const parsedBody = updateServiceSchema.parse(req.body);
+    const parsedParam = getCategorySchema.parse(req.params);
+    const parsedBody = updateCategorySchema.parse(req.body);
 
     req.validatedParams = parsedParam;
     req.body = parsedBody; 

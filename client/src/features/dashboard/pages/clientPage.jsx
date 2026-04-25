@@ -1,10 +1,14 @@
-import { Box, Heading, Footer, Spinner, Text, Flex, Button, Input, Textarea, VStack, HStack, SegmentGroup } from "@chakra-ui/react";
+import { Box, Heading, Footer, Spinner, Text, Flex, Button, Input, Textarea, VStack, HStack, SegmentGroup, useDisclosure } from "@chakra-ui/react";
 import { FullScreenPage } from "../../../shared/components/layout/FullScreenPage";
 import { useDashboardSummaryQuery } from "../hooks/useDashboardSummaryQuery";
 import { createContext, useContext, useMemo, useEffect, useState } from "react";
 import { Selector } from "../components/selector"
 import { Multiselector } from "../components/multiselector";
+import { ServiceModal } from '../components/serviceModal'
 
+import { useServicesQuery } from "../hooks/useServicesQuery";
+import { useCategoriesQuery } from "../hooks/useCategoriesQuery";
+import { useReservationsQuery } from "../hooks/useReservationsQuery";
 
 import { useAuth } from "../../../features/auth/context/AuthContext";
 
@@ -18,6 +22,10 @@ export function ClientPage() {
   };
 
   const dashboardSummaryQuery = useDashboardSummaryQuery();
+
+  const { data: services = [], isLoadingService, isErrorService } = useServicesQuery();
+  const { data: categories = [], isLoadingCategories, isErrorCategories } = useCategoriesQuery();
+  const { data: reservations = [], isLoadingReservations, isErrorReservations } = useReservationsQuery(user.uid);
 
   const reservations_mock = [
     {id:1, name: "Grand Pa", category: "Restaurant", reservation_start_date: "11.04", reservation_start_time: "15:30"},
@@ -116,9 +124,10 @@ export function ClientPage() {
                 h="400px"
                 overflowY="auto"
                 pr={2}
+                mt="2"
               >
                 <VStack spacing={3} align="stretch" mt="2">
-                  {showContent.map((item) => (
+                  {(!isLoadingService && !isErrorService) ? (services.map((item) => (
                     <Box
                       key={item.id}
                       p={3}
@@ -130,16 +139,16 @@ export function ClientPage() {
                     >
                       <Flex justify="space-between" align="center">
                         <Box>
-                          <Heading size="xl">{item.name}</Heading>
-                          <Text size="sm" color="#d1d1d1">{item.category}</Text>
+                          <Heading size="xl">{item.company_name}</Heading>
+                          {!(isLoadingCategories && !isErrorCategories) ? (<Text size="sm" color="#d1d1d1">{categories.find(s => s.id === item.categoryID).name}</Text>) : null}
                         </Box>
 
                         <Box textAlign="right" >
-                            <Box size="sm" color="#ffffff">{item.rating}</Box>
+                            <Box size="sm" color="#ffffff">5.0</Box>
                         </Box>
                       </Flex>
                     </Box>
-                  ))}
+                  ))) : null}
                 </VStack>
               </Box>
 
@@ -180,7 +189,7 @@ export function ClientPage() {
                 pr={2}
               >
                 <VStack spacing={3} align="stretch" mt="2">
-                  {reservations_mock.map((item) => (
+                  {(!isLoadingReservations && !isErrorReservations) ? (reservations.map((item) => (
                     <Box
                       key={item.id}
                       p={3}
@@ -192,17 +201,17 @@ export function ClientPage() {
                     >
                       <Flex justify="space-between" align="center">
                         <Box>
-                          <Heading size="xl">{item.name}</Heading>
-                          <Text size="sm" color="#d1d1d1">{item.category}</Text>
+                          <Heading size="xl">{item.service.company_name}</Heading>
+                          <Text size="sm" color="#d1d1d1">{categories.find(s => s.id === item.service.categoryID).name}</Text>
                         </Box>
 
                         <Box textAlign="right" >
-                            <Box size="sm" color="#ffffff">{item.reservation_start_time}</Box>
-                            <Box fontSize="10px" color="#d1d1d1">{item.reservation_start_date}</Box>
+                            <Box size="sm" color="#ffffff">{item.reservation_starts.split(' ')[1]}</Box>
+                            <Box fontSize="10px" color="#d1d1d1">{item.reservation_starts.split(' ')[0]}</Box>
                         </Box>
                       </Flex>
                     </Box>
-                  ))}
+                  ))) : null}
                 </VStack>
               </Box>
             </Box>
@@ -211,6 +220,7 @@ export function ClientPage() {
             
          
         ) : null}
+
       </Box>
     </FullScreenPage>
   );

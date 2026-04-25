@@ -13,8 +13,8 @@ export function Selector({
   //const [value, setValue] = useState("");
 
   const collection = createListCollection({
-    items: objectList.map((item) => ({
-      label: item.name,
+    items: objectList.map((item) => ({ 
+      label: item.name ? item.name :item.company_name,
       value: String(item.id),
     })),
   });

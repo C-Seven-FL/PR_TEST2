@@ -4,6 +4,7 @@ import {StatusCodes} from "http-status-codes";
 
 import serviceRoutes from "./api/service/service.routes.js"
 import userRoutes from "./api/user/user.routes.js"
+import categoryRoutes from "./api/category/category.routes.js"
 
 //import DBService from "./services/db.service.js";
 
@@ -18,8 +19,9 @@ app.use(
 );
 app.use(express.json());
 
-app.use('/user', userRoutes)
+app.use('/user', userRoutes);
 app.use('/service', serviceRoutes);
+app.use('/category', categoryRoutes);
 
 /*
 async function initSeq(){

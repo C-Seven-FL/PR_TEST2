@@ -1,11 +1,73 @@
 import express from "express";
 import { randomBytes } from "crypto";
 import { StatusCodes } from "http-status-codes";
+import { findServiceByID } from "../../../../user_service/api/service/service.dao"
 
 const router = express.Router();
 
 // In-memory storage
-const reservations = [];
+const reservations = [
+  {
+    id: "f31ef12f12f12ef",
+    clientID: "mock-client-1",
+    client_view: true,
+    serviceID: "32rqty57o9809",
+    provider_view: true,
+    reservation_starts: "2026-04-27 11:00",
+    reservation_ends: "2026-04-27 13:00",
+    regular: true,
+    edited: false,
+    status: "Active"
+  },
+  {
+    id: "fdq3fqfqfqbge",
+    clientID: "mock-client-1",
+    client_view: true,
+    serviceID: "f3wgfeq3fq3gq3ef",
+    provider_view: true,
+    reservation_starts: "2026-04-26 14:00",
+    reservation_ends: "2026-04-26 16:00",
+    regular: true,
+    edited: false,
+    status: "Active"
+  },
+  {
+    id: "gen5e4twgw5yrj5h",
+    clientID: "mock-client-1",
+    client_view: true,
+    serviceID: "gh4534g2rf23g",
+    provider_view: true,
+    reservation_starts: "2026-04-29 18:00",
+    reservation_ends: "2026-04-29 19:00",
+    regular: true,
+    edited: false,
+    status: "Active"
+  },
+  {
+    id: "wrgh5ehmr6j5ht4g",
+    clientID: "mock-client-2",
+    client_view: true,
+    serviceID: "32rqty57o9809",
+    provider_view: true,
+    reservation_starts: "2026-04-25 13:00",
+    reservation_ends: "2026-04-25 15:00",
+    regular: true,
+    edited: false,
+    status: "Active"
+  },
+  {
+    id: "gw4ghw4hw4tgr",
+    clientID: "mock-client-3",
+    client_view: true,
+    serviceID: "32rqty57o9809",
+    provider_view: true,
+    reservation_starts: "2026-04-25 17:00",
+    reservation_ends: "2026-04-25 19:00",
+    regular: true,
+    edited: false,
+    status: "Active"
+  },
+];
 
 const generateReservationId = () => randomBytes(8).toString("hex");
 
@@ -87,9 +149,30 @@ router.get("/:id", (req, res) => {
 });
 
 // LIST
-router.get("/", (req, res) => {
-  const list_reservation = reservations
-  res.json(list_reservation);
+router.get("/", async (req, res) => {
+  let result = reservations;
+
+  const filters = req.query;
+
+  if (filters.clientID) {
+    result = result.filter(r => r.clientID === filters.clientID);
+  }
+
+  const serviceIds = [...new Set(result.map(r => r.serviceID))];
+
+  const services = serviceIds.map(id => findServiceByID(id));
+
+  const serviceMap = {};
+  services.forEach(s => {
+    if (s) serviceMap[s.id] = s;
+  });
+
+  const enriched = result.map(r => ({
+    ...r,
+    service: serviceMap[r.serviceID] || null
+  }));
+
+  res.json(enriched);
 });
 
 // UPDATE

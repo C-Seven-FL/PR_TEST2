@@ -1,12 +1,10 @@
 import { StatusCodes } from "http-status-codes";
-import { getAllServices } from "../service.dao.js";
+import { getAllCategories } from "../category.dao.js";
 
-export async function ListServiceABL(req, res) {
+export async function ListCategoryABL(req, res) {
     try {
 
-        const filters = req.query;
-
-        const result = await getAllServices(filters);
+        const result = await getAllCategories();
 
         return res.status(StatusCodes.CREATED).json(result);
     } catch (err) {

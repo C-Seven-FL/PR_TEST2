@@ -1,24 +1,24 @@
 import { StatusCodes } from "http-status-codes";
-import { findServiceByID, updateService } from "../service.dao.js";
+import { findCategoryByID, updateCategory } from "../category.dao.js";
 
-export async function UpdateServiceABL(req, res) {
+export async function UpdateCategoryABL(req, res) {
     try {
         const {id} = req.validatedParams;
         const data = req.body;
 
-        const existing = findServiceByID(id);
+        const existing = findCategoryByID(id);
         if (!existing) {
             return res.status(StatusCodes.CONFLICT).json({
-                message: "Service not exist"
+                message: "Category not exist"
             });
         }
 
-        const updatedService = {
+        const updatedCategory = {
         ...existing,
         ...data
         };
 
-        const result = await updateService(id, updatedService);
+        const result = await updateCategory(id, updatedCategory);
 
         return res.status(StatusCodes.CREATED).json(result);
     } catch (err) {

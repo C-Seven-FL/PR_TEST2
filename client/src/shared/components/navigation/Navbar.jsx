@@ -170,7 +170,7 @@ export function Navbar() {
 
               {isAuthenticated ? (
                 <Flex align="center" gap="10px" position="relative">
-                  <Button
+                  {role === "client" ? (<Button
                     as={NavLink}
                     to="/services"
                     size="sm"
@@ -182,7 +182,7 @@ export function Navbar() {
                     _hover={{ bg: "var(--brand-primary-hover)" }}
                   >
                     Nová rezervace
-                  </Button>
+                  </Button>) : null}
 
                   <Button
                     size="sm"

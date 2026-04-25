@@ -80,7 +80,7 @@ app.put("/user/:id", async (req, res) => {
 
 
 // ==========================================
-// SERVISY / SERVICES (user_service: 3001)
+// SERVISY / SERVICES (user_service: 4001)
 // ==========================================
 
 // SERVICE CREATE
@@ -138,6 +138,76 @@ app.put("/service/:id", async (req, res) => {
   try {
   const response = await axios.put(
   `http://localhost:4001/service/${req.params.id}`,
+    req.body,
+    {
+      headers: {
+        Authorization: null
+      }});
+  res.status(response.status).json(response.data);
+    }
+  catch (err) {
+    res.status(err.response?.status || 500).json(err.response?.data || {});
+  }
+})
+
+// ==========================================
+// CATEGORIE / CATEGORY (user_service: 4001)
+// ==========================================
+
+// CATEGORY CREATE
+app.post("/category", async (req, res) => {
+  try {
+  const response = await axios.post(
+    "http://localhost:4001/category/create",
+    req.body,
+    {
+      headers: {
+        Authorization: null
+      }});
+  res.status(response.status).json(response.data);
+    }
+  catch (err) {
+    res.status(err.response?.status || 500).json(err.response?.data || {});
+  }
+})
+
+// CATEGORY GET BY ID
+app.get("/category/:id", async (req, res) => {
+  try {
+  const response = await axios.get(
+    `http://localhost:4001/category/${req.params.id}`,
+    {
+      headers: {
+        Authorization: null
+      }});
+  res.status(response.status).json(response.data);
+    }
+  catch (err) {
+    res.status(err.response?.status || 500).json(err.response?.data || {});
+  }
+})
+
+// CATEGORY LIST
+app.get("/category", async (req, res) => {
+  try {
+  const response = await axios.get(
+    `http://localhost:4001/category`,
+    {
+      headers: {
+        Authorization: null
+      }});
+  res.status(response.status).json(response.data);
+    }
+  catch (err) {
+    res.status(err.response?.status || 500).json(err.response?.data || {});
+  }
+})
+
+// CATEGORY UPDATE BY ID
+app.put("/category/:id", async (req, res) => {
+  try {
+  const response = await axios.put(
+  `http://localhost:4001/category/${req.params.id}`,
     req.body,
     {
       headers: {

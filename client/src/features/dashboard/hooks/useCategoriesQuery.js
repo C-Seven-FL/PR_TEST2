@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export function useServicesQuery() {
+export function useCategoriesQuery() {
   return useQuery({
-    queryKey: ["services"],
+    queryKey: ["category"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3001/service");
+      const res = await axios.get("http://localhost:3001/category");
       return res.data;
     },
-
-    refetchInterval: 10000
   });
 }

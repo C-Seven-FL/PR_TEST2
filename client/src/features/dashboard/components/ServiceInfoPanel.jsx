@@ -1,6 +1,7 @@
-import { Box, Heading, Input, Textarea, VStack, HStack, Button } from "@chakra-ui/react";
+import { Box, Heading, Input, Textarea, VStack, HStack, Button, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import {Multiselector} from "./multiselector"
+import { Selector } from "./selector";
 import { ConfirmDialog } from "./ConfirmDialog";
 import axios from "axios";
 
@@ -82,38 +83,44 @@ export function ServiceInfoPanel({ service, onUpdated }) {
         )}
       </HStack>
 
-      <VStack align="stretch" gap={3}>
+      <VStack align="stretch">
 
+        <Text fontSize="11px">Company name</Text>
         <Input
-          value={form.name ?? ""}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={form.company_name ?? ""}
+          onChange={(e) => handleChange("company_name", e.target.value)}
           disabled={!isEditing}
         />
 
+        <Text fontSize="11px">Company category</Text>
         <Input
           value={form.categoryID ?? ""}
           onChange={(e) => handleChange("categoryID", e.target.value)}
           disabled={!isEditing}
         />
 
+        <Text fontSize="11px">Description</Text>
         <Textarea
           value={form.description ?? ""}
           onChange={(e) => handleChange("description", e.target.value)}
           disabled={!isEditing}
         />
 
+        <Text fontSize="11px">Location</Text>
         <Input
-          value={form.address ?? ""}
-          onChange={(e) => handleChange("address", e.target.value)}
+          value={form.company_address ?? ""}
+          onChange={(e) => handleChange("company_address", e.target.value)}
           disabled={!isEditing}
         />
 
+        <Text fontSize="11px">Working days</Text>
         <Multiselector 
           isDisabled={!isEditing}
           value={form.working_days ?? []}
           onChange={(val) => handleChange("working_days", val)}
         />
 
+        <Text fontSize="11px">Working time</Text>
         <HStack>
           <Input
             value={form.hour_start ?? ""}

@@ -3,6 +3,8 @@ import { FullScreenPage } from "../../../shared/components/layout/FullScreenPage
 import { useDashboardSummaryQuery } from "../hooks/useDashboardSummaryQuery";
 import { useState, useEffect } from "react";
 import { Selector } from "../components/selector"
+import {CreateServiceDialog} from "../components/CreateServiceDialog"
+import { useAuth } from "../../../features/auth/context/AuthContext";
 
 import {ServiceInfoPanel} from "../components/ServiceInfoPanel"
 
@@ -15,6 +17,7 @@ export function ProviderPage() {
     setIsEditing((prev) => !prev);
   };
 
+  
   const dashboardSummaryQuery = useDashboardSummaryQuery();
   const queryClient = useQueryClient();
   // const [services, setServices] = useState([])
@@ -41,7 +44,7 @@ export function ProviderPage() {
         bg="var(--auth-surface)"
         borderRadius="var(--radius-xl)"
         border="1px solid var(--border-soft)"
-        p={{ base: "20px", md: "28px", xl: "36px" }}
+        p={{ base: "20px", md: "28px", xl: "6px" }}
         boxShadow="var(--shadow-card)"
       >
         
@@ -103,8 +106,8 @@ export function ProviderPage() {
               />
 
               <HStack>
-                <Button colorScheme="blue">Add New Service</Button>
-                <Button variant="outline">Close Service</Button>
+                <Button>Create Service</Button>
+                <Button variant="outline">Stop Service</Button>
               </HStack>
             </Flex>
 
@@ -146,7 +149,7 @@ export function ProviderPage() {
               </Flex>
 
               <Box
-                h="400px"
+                h="450px"
                 overflowY="auto"
                 pr={2}
               >
