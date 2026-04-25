@@ -1,7 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import {StatusCodes} from "http-status-codes";
+
 import serviceRoutes from "./api/service/service.routes.js"
+import userRoutes from "./api/user/user.routes.js"
+
 //import DBService from "./services/db.service.js";
 
 const PORT = 4001
@@ -15,7 +18,7 @@ app.use(
 );
 app.use(express.json());
 
-//app.user('/user', userRoutes)
+app.use('/user', userRoutes)
 app.use('/service', serviceRoutes);
 
 /*

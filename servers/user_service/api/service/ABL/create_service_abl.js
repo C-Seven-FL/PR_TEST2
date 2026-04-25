@@ -7,7 +7,8 @@ export async function CreateServiceABL(req, res) {
 
         const data = req.body;
 
-        const existing = findServiceByName(data.name);
+        const existing = await findServiceByName(data.company_name);
+        //console.log(data.company_name)
         if (existing) {
             return res.status(StatusCodes.CONFLICT).json({
                 message: "Service with this name already exists"

@@ -3,9 +3,9 @@ const services = [
     id: "32rqty57o9809",
     userID: "412f4f21",
     categoryID: "cat1",
-    name: "Barbershop Best",
+    company_name: "Barbershop Best",
     description: "Hair saloon for every people",
-    address: "Jateční 1112",
+    company_address: "Jateční 1112",
     working_days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     hour_start: "11:00",
     hour_end: "19:00",
@@ -18,9 +18,9 @@ const services = [
     id: "dfqg2efdq3fq3f",
     userID: "a1b2c3d4e5f67890",
     categoryID: "cat1",
-    name: "Haircut Basic",
+    company_name: "Haircut Basic",
     description: "Simple haircut service",
-    address: "Ostrava 101",
+    company_address: "Ostrava 101",
     working_days: ["Monday", "Tuesday"],
     hour_start: "09:00",
     hour_end: "17:00",
@@ -33,9 +33,9 @@ const services = [
     id: "q2efdgw3th4grqrg3",
     userID: "b2c3d4e5f6789012",
     categoryID: "cat2",
-    name: "Car Repair",
+    company_name: "Car Repair",
     description: "Basic car maintenance and repair",
-    address: "Brno 22",
+    company_address: "Brno 22",
     working_days: ["Wednesday", "Thursday"],
     hour_start: "08:00",
     hour_end: "16:00",
@@ -48,9 +48,9 @@ const services = [
     id: "q2ef3gfw43rgq3r",
     userID: "b2c3d41e2f2e1f12ef",
     categoryID: "cat3",
-    name: "Psychologist Mark",
+    company_name: "Psychologist Mark",
     description: "Clean and effective psychology by professional",
-    address: "Praha 4",
+    company_address: "Praha 4",
     working_days: ["Monday", "Wednesday", "Saturday"],
     hour_start: "10:00",
     hour_end: "20:00",
@@ -74,7 +74,7 @@ export function findServiceByID(id) {
 
 
 export function findServiceByName(name) {
-  return services.find(s => s.name === name);
+  return services.find(s => s.company_name === name);
 }
 
 

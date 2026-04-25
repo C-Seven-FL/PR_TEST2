@@ -48,6 +48,7 @@ export function validateGetService(req, res, next) {
 
 export function validateUpdateService(req, res, next) {
   try {
+    console.log(req.params)
     const parsedParam = getServiceSchema.parse(req.params);
     const parsedBody = updateServiceSchema.parse(req.body);
 
